@@ -40,6 +40,9 @@ jobs:
     name: 📦 2. Empaquetar y Publicar en PyPI
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # 🚀 CRÍTICO: Otorga el permiso de identidad federada para publicar sin contraseñas
+      contents: read
     steps:
       - name: ⚙️ Descargar código del repositorio
         uses: actions/checkout@v4
@@ -51,23 +54,19 @@ jobs:
 
       - name: ⚙️ Sincronizar versión dinámicamente desde el Tag de Git
         run: |
-          # Extrae '1.2.2' del tag 'v1.2.2'
           VERSION_TAG=${GITHUB_REF#refs/tags/v}
           echo "Sincronizando metadatos del empaquetado con la versión: $VERSION_TAG"
-          # Reemplaza la línea de versión fija en el pyproject.toml del contenedor
           sed -i "s/version = .*/version = \"$VERSION_TAG\"/g" pyproject.toml
 
-      - name: ⚙️ Instalar herramientas de empaquetado (Build & Twine)
+      - name: ⚙️ Instalar herramientas de empaquetado (Build)
         run: |
           python -m pip install --upgrade pip
-          pip install build twine
+          pip install build
 
       - name: 📦 Construir binarios de distribución (.whl y tar.gz)
         run: python -m build
 
-      - name: 🚀 Transmitir y publicar legajo en PyPI
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: |
-          twine upload dist/*
+      - name: 🚀 Publicar legajo en PyPI vía Trusted Publisher oficial
+        uses: pypa/allowed-publisher@v1 # Usa la acción oficial de la Python Packaging Authority
+        with:
+          packages-dir: dist/
