@@ -1,0 +1,88 @@
+# ==============================================================================
+# Python Core (Byte-compiled / Optimization / DLL files)
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+**/venv
+dantesito.egg-info
+dantesito-chasky.egg-info
+data/
+
+
+# ==============================================================================
+# Virtual Environments & Package Managers
+# ==============================================================================
+.venv/
+venv/
+ENV/
+env/
+pyvenv.cfg
+.pypackages/
+.pip-專案
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ==============================================================================
+# Environment Secrets & Configurations (CRITICAL for security)
+# ==============================================================================
+.env
+.env.*
+!.env.example
+secrets.toml
+
+# ==============================================================================
+# IDEs and Editors
+# ==============================================================================
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# PyCharm / JetBrains
+.idea/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# ==============================================================================
+# Testing & Coverage
+# ==============================================================================
+.pytest_cache/
+.tox/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+nosetests.xml
+coverage.xml
+*.cache
+
+# ==============================================================================
+# Distribution & Packaging
+# ==============================================================================
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ==============================================================================
+# Operating System files
+# ==============================================================================
+.DS_Store
+Thumbs.db

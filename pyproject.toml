@@ -1,0 +1,33 @@
+# pyproject.toml
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dantesito-chasky"
+version = "0.1.0"
+description = "Librería de procesamiento y RAG de documentos legales optimizada para bajo consumo de RAM."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Dantesito", email = "developer@dantesito.local" }
+]
+dependencies = [
+    "docling>=2.0.0",
+    "tiktoken>=0.7.0",
+    "chromadb>=0.5.0",
+    "ijson>=3.3.0",
+    "requests>=2.32.0",
+    "streamlit>=1.30.0",
+    "google-genai>=0.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["dantesito*"]
+namespaces = true
