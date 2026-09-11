@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dantesito-chasky"
-version = "0.1.0"
+version = "1.2.0"
 description = "Librería de procesamiento y RAG de documentos legales optimizada para bajo consumo de RAM."
 readme = "README.md"
 requires-python = ">=3.10"

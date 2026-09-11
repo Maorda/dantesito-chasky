@@ -1,0 +1,65 @@
+name: 🚀 Publicar Librería en PyPI
+
+on:
+  push:
+    tags:
+      - 'v*' # Se ejecuta únicamente cuando creas un tag de versión (Ej: v1.2.0)
+
+jobs:
+  test:
+    name: 🧪 1. Control de Calidad (Pytest)
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⚙️ Descargar código del repositorio
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Configurar entorno Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: ⚙️ Instalar dependencias del proyecto (Core + Dev)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[dev]
+          pip install anyio faker
+
+      - name: 🧪 Ejecutar suite de pruebas perimetrales
+        env:
+          NESTJS_API_URL: "https://koyeb.app"
+          GOOGLE_DRIVE_FOLDER_ID: "1lsNX5GEiM7-Ho2kTbu00AqfckAnyWyFl"
+          GEMINI_API_KEY: "AIzaSyMockKey_Pipeline_777"
+          GOOGLE_CLIENT_EMAIL: "uploadsad@://gserviceaccount.com"
+          GOOGLE_PRIVATE_KEY: "-----BEGIN RSA PRIVATE KEY-----\nMOCK\n-----END RSA PRIVATE KEY-----\n"
+          QUIPU_API_AUTH_TOKEN: "Messenger2"
+        run: |
+          pytest tests/ -v
+
+  publish:
+    name: 📦 2. Empaquetar y Publicar en PyPI
+    needs: test # Solo se ejecuta si el job de pruebas pasa al 100% en verde
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⚙️ Descargar código del repositorio
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Configurar entorno Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: ⚙️ Instalar herramientas de empaquetado (Build & Twine)
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+
+      - name: 📦 Construir binarios de distribución (.whl y tar.gz)
+        run: python -m build
+
+      - name: 🚀 Transmitir y publicar legajo en PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          twine upload dist/*

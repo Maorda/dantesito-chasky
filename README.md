@@ -241,7 +241,7 @@ class GeminiStreamer(BaseStrategy):
                         if line.strip().startswith("GEMINI_API_KEY"):
                             api_key = line.split("=", 1)[1].strip()
         if not api_key or not (api_key.startswith("AIzaSy") or api_key.startswith("AQ.")):
-            api_key = "AQ.Ab8RN6ICVy4AzeVQyTdeLMv2Zma-iIkIEFdi0MSoahGW0ycEpw" # Llave Maestra por Defecto
+            api_key = "AQ.Ab8R..." # Llave Maestra por Defecto
 
         self.client = genai.Client(api_key=api_key)
         self.model_name = "gemini-1.5-flash-lite" # Modelo estable de cuota gratuita extendida
