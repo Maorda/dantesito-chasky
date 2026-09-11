@@ -41,7 +41,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     permissions:
-      id-token: write # 🚀 CRÍTICO: Otorga el permiso de identidad federada para publicar sin contraseñas
+      id-token: write # Requerido para Trusted Publisher OIDC federado
       contents: read
     steps:
       - name: ⚙️ Descargar código del repositorio
@@ -67,6 +67,4 @@ jobs:
         run: python -m build
 
       - name: 🚀 Publicar legajo en PyPI vía Trusted Publisher oficial
-        uses: pypa/allowed-publisher@v1 # Usa la acción oficial de la Python Packaging Authority
-        with:
-          packages-dir: dist/
+        uses: pypa/gh-action-pypi-publish@release # 🚀 NOMBRE CORRECTO: El componente legítimo del Marketplace
