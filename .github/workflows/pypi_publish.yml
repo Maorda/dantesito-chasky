@@ -3,15 +3,17 @@ name: 🚀 Publicar Librería en PyPI
 on:
   push:
     tags:
-      - 'v*' # Se ejecuta únicamente cuando creas un tag de versión (Ej: v1.2.0)
+      - 'v*' # Se ejecuta únicamente cuando creas un tag de versión (Ej: v1.2.2)
 
 jobs:
   test:
     name: 🧪 1. Control de Calidad (Pytest)
     runs-on: ubuntu-latest
     steps:
-      - name: ⚙️ Descargar código del repositorio
+      - name: ⚙️ Descargar código del repositorio con historial completo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Permite leer todos los tags para cálculo dinámico de versión
 
       - name: ⚙️ Configurar entorno Python 3.12
         uses: actions/setup-python@v5
@@ -22,6 +24,7 @@ jobs:
       - name: ⚙️ Instalar dependencias del proyecto (Core + Dev)
         run: |
           python -m pip install --upgrade pip
+          pip install setuptools-scm
           pip install -e .[dev]
           pip install anyio faker
 
@@ -38,11 +41,13 @@ jobs:
 
   publish:
     name: 📦 2. Empaquetar y Publicar en PyPI
-    needs: test # Solo se ejecuta si el job de pruebas pasa al 100% en verde
+    needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: ⚙️ Descargar código del repositorio
+      - name: ⚙️ Descargar código del repositorio con historial completo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: ⚙️ Configurar entorno Python 3.12
         uses: actions/setup-python@v5
@@ -52,7 +57,7 @@ jobs:
       - name: ⚙️ Instalar herramientas de empaquetado (Build & Twine)
         run: |
           python -m pip install --upgrade pip
-          pip install build twine
+          pip install build twine setuptools-scm
 
       - name: 📦 Construir binarios de distribución (.whl y tar.gz)
         run: python -m build

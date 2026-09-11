@@ -1,11 +1,11 @@
 # pyproject.toml
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "setuptools-scm>=8.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "dantesito-chasky"
-version = "1.2.0"
+dynamic = ["version"] # 🚀 DINÁMICO: El empaquetador extraerá la versión directamente desde el Tag de Git
 description = "Librería de procesamiento y RAG de documentos legales optimizada para bajo consumo de RAM."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -20,7 +20,6 @@ dependencies = [
     "requests>=2.32.0",
     "streamlit>=1.30.0",
     "google-genai>=0.1.0",
-    # 🚀 ENTORNO PERIMETRAL: Declaradas explícitamente para el pipeline web y Google Drive
     "fastapi>=0.110.0",
     "uvicorn>=0.28.0",
     "google-api-python-client>=2.118.0",
