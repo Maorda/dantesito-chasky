@@ -9,6 +9,7 @@ __pycache__/
 dantesito.egg-info
 dantesito-chasky.egg-info
 data/
+tests/
 
 
 # ==============================================================================
