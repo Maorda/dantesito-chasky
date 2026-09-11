@@ -67,4 +67,4 @@ jobs:
         run: python -m build
 
       - name: 🚀 Publicar legajo en PyPI vía Trusted Publisher oficial
-        uses: pypa/gh-action-pypi-publish@release # 🚀 NOMBRE CORRECTO: El componente legítimo del Marketplace
+        uses: pypa/gh-action-pypi-publish@v1.12.4 # 🚀 FIJADO: Versión semántica estable y blindada del Marketplace
