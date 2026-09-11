@@ -1,11 +1,11 @@
 # pyproject.toml
 [build-system]
-requires = ["setuptools>=61.0", "setuptools-scm>=8.0"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "dantesito-chasky"
-dynamic = ["version"] # 🚀 DINÁMICO: El empaquetador extraerá la versión directamente desde el Tag de Git
+version = "1.2.2"  # Se actualizará dinámicamente en el contenedor de GitHub
 description = "Librería de procesamiento y RAG de documentos legales optimizada para bajo consumo de RAM."
 readme = "README.md"
 requires-python = ">=3.10"

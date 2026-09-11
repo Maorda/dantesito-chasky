@@ -3,17 +3,15 @@ name: 🚀 Publicar Librería en PyPI
 on:
   push:
     tags:
-      - 'v*' # Se ejecuta únicamente cuando creas un tag de versión (Ej: v1.2.2)
+      - 'v*'
 
 jobs:
   test:
     name: 🧪 1. Control de Calidad (Pytest)
     runs-on: ubuntu-latest
     steps:
-      - name: ⚙️ Descargar código del repositorio con historial completo
+      - name: ⚙️ Descargar código del repositorio
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Permite leer todos los tags para cálculo dinámico de versión
 
       - name: ⚙️ Configurar entorno Python 3.12
         uses: actions/setup-python@v5
@@ -24,7 +22,6 @@ jobs:
       - name: ⚙️ Instalar dependencias del proyecto (Core + Dev)
         run: |
           python -m pip install --upgrade pip
-          pip install setuptools-scm
           pip install -e .[dev]
           pip install anyio faker
 
@@ -44,20 +41,26 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: ⚙️ Descargar código del repositorio con historial completo
+      - name: ⚙️ Descargar código del repositorio
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: ⚙️ Configurar entorno Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
+      - name: ⚙️ Sincronizar versión dinámicamente desde el Tag de Git
+        run: |
+          # Extrae '1.2.2' del tag 'v1.2.2'
+          VERSION_TAG=${GITHUB_REF#refs/tags/v}
+          echo "Sincronizando metadatos del empaquetado con la versión: $VERSION_TAG"
+          # Reemplaza la línea de versión fija en el pyproject.toml del contenedor
+          sed -i "s/version = .*/version = \"$VERSION_TAG\"/g" pyproject.toml
+
       - name: ⚙️ Instalar herramientas de empaquetado (Build & Twine)
         run: |
           python -m pip install --upgrade pip
-          pip install build twine setuptools-scm
+          pip install build twine
 
       - name: 📦 Construir binarios de distribución (.whl y tar.gz)
         run: python -m build
