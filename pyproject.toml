@@ -4,8 +4,8 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "chaskywasi"  # 🚀 NUEVA IDENTIDAD: Sincronizado con el pending publisher de PyPI
-version = "1.3.0"   # Se actualizará dinámicamente en el contenedor de GitHub según el Tag
+name = "quipucamayoc"  # 🚀 IDENTITY UPGRADE: Sincronizado con el pending publisher de PyPI
+version = "1.4.0"      # Se actualizará dinámicamente en el contenedor de GitHub según el Tag
 description = "Librería de procesamiento y RAG de documentos legales optimizada para bajo consumo de RAM."
 readme = "README.md"
 requires-python = ">=3.10"
